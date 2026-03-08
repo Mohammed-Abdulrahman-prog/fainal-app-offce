@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fainal_app_offce/project_Library/Model/services.dart';
 import 'package:fainal_app_offce/project_Library/fullScreenImage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -14,16 +15,13 @@ class ShowImagesPage extends StatefulWidget {
 class _ShowImagesPageState extends State<ShowImagesPage> {
 
   List files = [];
-  String URl = "http://192.168.43.56:8080/project_Library_api/backendLibrary.php";
-  var imageUrl = "http://192.168.43.56:8080/project_Library_api/uploads/";
-  @override
   void initState() {
     super.initState();
     fetchFiles(widget.userId);
   }
 
   Future<void> fetchFiles(int userid) async {
-    var uri = Uri.parse(URl);
+    var uri = Uri.parse(Services.URLServer);
     String useridd = userid.toString();
     var response = await http.post(uri, 
     body: {
@@ -44,7 +42,7 @@ class _ShowImagesPageState extends State<ShowImagesPage> {
 
   Future<void> deleteFile(int id) async {
     try{
-      var uri = Uri.parse(URl);
+      var uri = Uri.parse(Services.URLServer);
       var response = await http.post(uri, body: {"action":"deleteFile", "id":id.toString()});
       var data = jsonDecode(response.body);
 
@@ -75,12 +73,11 @@ class _ShowImagesPageState extends State<ShowImagesPage> {
                   itemCount: files.length,
                   itemBuilder: (context,index){
                     var file = files[index];
-                    var imageUrl = "http://192.168.43.56:8080/project_Library_api/uploads/${file['name']}";
+                    var imageUrl = "${Services.UrlImages}${file['name']}";
                     return Card(
                       margin: EdgeInsets.all(8),
                       child: InkWell(
                         onTap: () {
-                          // الانتقال لصفحة عرض الصورة
                           Navigator.push(
                             context,
                             MaterialPageRoute(
