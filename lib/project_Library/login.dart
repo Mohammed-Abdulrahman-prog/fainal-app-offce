@@ -1,4 +1,6 @@
 
+// import 'dart:nativewrappers/_internal/vm/bin/vmservice_io.dart';
+
 import 'package:fainal_app_offce/project_Library/Home.dart';
 import 'package:fainal_app_offce/project_Library/Model/services.dart';
 import 'package:fainal_app_offce/project_Library/ShowImage.dart';
@@ -94,7 +96,7 @@ class _Loginscreen extends State<Loginscreen> {
                     OutlinedButton(
                         onPressed: () async{
                           try{
-                            var response = await Login(username.text, password.text);
+                            var response = await Services.Login(username.text, password.text);
                             print(response);
                         
                             if(username.text.isEmpty || password.text.isEmpty){
@@ -102,7 +104,7 @@ class _Loginscreen extends State<Loginscreen> {
                                 result = "الرجاء ادخال قيمة في الحقل";
                               });
                             }else if(response['status'] == 'success'){
-                              var resp_userid = await Login(username.text, password.text);
+                              var resp_userid = await Services.Login(username.text, password.text);
                               setState(() {
                                 userId = int.parse(resp_userid['data']['id']);
                               });
@@ -136,21 +138,21 @@ class _Loginscreen extends State<Loginscreen> {
   }
 }
 
-Login(String user, String pass) async{
-  String url = Services.URLServer;
-  var response = await http.post(
-    Uri.parse(url),
-    body: {
-      "action": "login",
-      "USERNAME": user,
-      "PASSWORD": pass,
-    } 
-  );
+// Login(String user, String pass) async{
+//   String url = Services.URLServer;
+//   var response = await http.post(
+//     Uri.parse(url),
+//     body: {
+//       "action": "login",
+//       "USERNAME": user,
+//       "PASSWORD": pass,
+//     } 
+//   );
 
-  dynamic data = jsonDecode(response.body);
-  print("data id: ${data['data']['id']}");
-  print(data['data']['id'].runtimeType); // لعرض نوع المتغير
-  // print(data);
-  return data;
-}
+  // dynamic data = jsonDecode(response.body);
+  // print("data id: ${data['data']['id']}");
+  // print(data['data']['id'].runtimeType); // لعرض نوع المتغير
+  // // print(data);
+  // return data;
+  // }
 

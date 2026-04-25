@@ -75,7 +75,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     OutlinedButton(
                         onPressed: () async{
                           try{
-                            var response = await CreateAccou(username.text, password.text);
+                            var response = await Services.CreateAccou(username.text, password.text);
                             print(response);
                 
                             if(username.text.isEmpty || password.text.isEmpty){
@@ -113,18 +113,18 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 }
 
-CreateAccou(String user, String pass) async{
-  String url = Services.URLServer;
-  var response = await http.post(
-    Uri.parse(url),
-    body: {
-      "action": "register",
-      "USERNAME": user,
-      "PASSWORD": pass,
-    } 
-  );
+// CreateAccou(String user, String pass) async{
+//   String url = Services.URLServer;
+//   var response = await http.post(
+//     Uri.parse(url),
+//     body: {
+//       "action": "register",
+//       "USERNAME": user,
+//       "PASSWORD": pass,
+//     } 
+//   );
 
-  dynamic data = jsonDecode(response.body);
-  print(data);
-  return data;
-}
+//   dynamic data = jsonDecode(response.body);
+//   print(data);
+//   return data;
+// }

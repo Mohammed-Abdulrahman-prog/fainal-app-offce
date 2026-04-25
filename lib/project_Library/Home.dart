@@ -22,7 +22,8 @@ class _HomeState extends State<Home> {
   int _currentPage = 0;
   Timer? _timer;
   List files = [];
-
+  late double screenHight;
+  late double screenWidth;
 
   Future<void> fetchFiles(int userid) async {
     var uri = Uri.parse(Services.URLServer);
@@ -84,6 +85,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    screenHight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -154,7 +157,7 @@ class _HomeState extends State<Home> {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              height: 300,
+              height: screenHight * 0.5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
               ),
@@ -169,17 +172,18 @@ class _HomeState extends State<Home> {
                   }catch(e){
                     print("error1: $e");
                   }
+                  return null;
                 },
               ),
             ),
             SizedBox(height: 40,),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 /// زر رفع الصور
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: screenWidth *0.05, vertical: screenWidth * 0.04),
                   ),
                   icon: Icon(Icons.upload),
                   label: Text("رفع الصور", style: TextStyle(fontSize: 20),),
@@ -193,12 +197,12 @@ class _HomeState extends State<Home> {
                   },
                 ),
 
-                SizedBox(width: 20),
+                SizedBox(width: 10),
 
                 /// زر عرض الصور
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: screenWidth *0.05, vertical: screenWidth * 0.04),
                   ),
                   icon: Icon(Icons.image),
                   label: Text("عرض الصور", style: TextStyle(fontSize: 20),),
